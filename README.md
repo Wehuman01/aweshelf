@@ -24,9 +24,9 @@
   </p>
 </div>
 
-## Install
+## Quick Start
 
-### Ask an AI agent
+### 1. Install and use aweshelf
 
 If you are working inside Claude Code, Codex, Cursor, or another coding agent, tell it:
 
@@ -39,25 +39,133 @@ The agent will first install the `aweshelf` CLI, then choose one of two skill ma
 1. **Via [aweskill](https://aweskill.webioinfo.top/)** — installs and manages the skill from GitHub with update, projection, and backup support. Requires Node.js.
 2. **Direct copy** — downloads `SKILL.md` into the agent's skill directory. No extra dependencies beyond Python, but future updates require copying the file again manually.
 
-### pip
+Once the bootstrap finishes, aweshelf is ready to use. Bookmarks, search, and edits all work through natural language — start with things like:
+
+> "Bookmark the current session."
+
+> "List my bookmarks in the backend category."
+
+> "Search for bookmarks related to auth."
+
+The agent reads [SKILL.md](resources/skills/aweshelf/SKILL.md) to understand all available commands and workflows.
+
+<details>
+<summary>Manual install — pip and skill setup</summary>
+
+Install from PyPI:
 
 ```bash
 pip install aweshelf
 ```
 
-### Optional: aweswitch
+Then put the skill where your agent can find it. Via aweskill (requires Node.js):
 
-aweshelf saves the active aweswitch profile when you bookmark a session. Install [aweswitch](https://github.com/mugpeng/aweswitch) to enable multi-profile management — without it, aweshelf works but profile restore on resume is skipped.
+```bash
+aweskill install Webioinfo01/aweshelf
+aweskill agent add skill aweshelf --global --agent <agent-id>   # <agent-id>: claude-code, codex, cursor, ...
+```
 
-With aweswitch, you can resume a session using the original provider (e.g. Claude Code official API) or switch to another configured profile like `cc-xiaomi`, `cc-glm`, etc. — each with its own API endpoint, token, and model.
+or by direct copy — download `SKILL.md` into your agent's skill directory; the directory table is in [README.ai.md](README.ai.md).
+
+</details>
+
+### 2. Equip your agent
+
+The bootstrap prompt in step 1 usually installs the `aweshelf` skill along the way — `README.ai.md` installs it as its own step. If you installed the CLI by hand or the skill is missing, project it once and the agent can manage bookmarks in this and future sessions:
+
+<details>
+<summary>Equivalent CLI commands</summary>
+
+```bash
+aweskill install Webioinfo01/aweshelf
+aweskill agent supported                          # find your agent id (lines marked ✓)
+aweskill agent add skill aweshelf --global --agent <agent-id>
+aweskill agent list --global --agent <agent-id>   # aweshelf shows as linked
+```
+
+No aweskill (and no Node.js)? Copy `SKILL.md` straight into the agent's skill directory — steps in [README.ai.md](README.ai.md).
+
+</details>
+
+### 3. Manage bookmarks through natural language
+
+Day-to-day aweshelf needs no commands — describe what you want (the full CLI reference is in [Commands](#commands)):
+
+#### Bookmark and organize
+
+You can tell your agent:
+
+```text
+Bookmark the current session as "Fix auth middleware bug" in the backend category.
+```
+
+<details>
+<summary>Equivalent CLI commands</summary>
+
+```bash
+aweshelf bookmark -t "Fix auth middleware bug" -c backend   # bookmark the current session
+aweshelf edit aweshelf_0001 -t "New title" -c frontend      # retitle or recategorize later
+aweshelf rm aweshelf_0002                                   # remove a bookmark
+```
+
+</details>
+
+#### Find sessions
+
+You can tell your agent:
+
+```text
+Search my bookmarks for anything related to auth and show me the most recent ones.
+```
+
+<details>
+<summary>Equivalent CLI commands</summary>
+
+```bash
+aweshelf list -c backend             # list one category
+aweshelf search "auth"               # search title, category, session, project, prompt, profile
+aweshelf recent -n 10                # the latest bookmarks
+aweshelf show aweshelf_0001          # one bookmark in detail
+```
+
+</details>
+
+#### Resume a session
+
+Want to continue where a past session left off? Resuming is the one thing the agent will not do for you: `aweshelf resume` launches a new agent process, which would conflict with the session you are talking to. Exit the agent first, then run it in your own terminal:
+
+```bash
+aweshelf resume aweshelf_0001                    # resume with the stored profile
+aweshelf resume aweshelf_0001 --profile cc-glm   # or force a different profile
+```
+
+#### Auto-bookmark with aweswitch
+
+If you launch sessions with [aweswitch](https://github.com/Webioinfo01/aweswitch), they can bookmark themselves — and each bookmark remembers the profile it launched with, so `resume` restores the original provider (e.g. Claude Code official API) or switches to another configured one like `cc-xiaomi` or `cc-glm`. Run in your own terminal (aweswitch starts a new agent session — the agent will not launch it for you):
+
+```bash
+aweswitch -c                    # launch + auto-bookmark
+aweswitch -c --profile cc-glm   # launch with a profile + auto-bookmark
+```
+
+Later, restore with the same profile:
+
+```bash
+aweshelf resume aweshelf_0001   # restores with the stored aweswitch profile
+```
+
+<details>
+<summary>Install aweswitch</summary>
 
 ```bash
 pip install aweswitch
 ```
 
-## Extensions
+Without aweswitch, aweshelf works fine — profile restore on resume is just skipped.
 
-- **[aweshelf-extension/vscode](https://github.com/mugpeng/aweshelf-extension/tree/main/vscode)** — VS Code / Cursor extension for browsing, searching, and resuming bookmarks from the sidebar. Search **aweshelf-ext** in the extension marketplace, or [open in Marketplace](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext). Also available as [.vsix](https://github.com/mugpeng/aweshelf-extension/releases).
+</details>
+
+> **Tip:** Prefer pointing instead of asking? `aweshelf browse` opens a TUI for browsing, searching, editing, and resuming bookmarks — see [Browse (TUI)](#browse-tui).
 
 ## Supported by
 
@@ -68,27 +176,13 @@ aweshelf is powered by two companion tools:
 
 aweswitch manages how you **launch** sessions; aweshelf manages how you **remember** them. Use `aweswitch -c` to auto-bookmark at launch, and `aweshelf resume` to restore with the same profile later.
 
-## Usage
+## Extensions
 
-### AI Agent
+- **[aweshelf-extension/vscode](https://github.com/mugpeng/aweshelf-extension/tree/main/vscode)** — VS Code / Cursor extension for browsing, searching, and resuming bookmarks from the sidebar. Search **aweshelf-ext** in the extension marketplace, or [open in Marketplace](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext). Also available as [.vsix](https://github.com/mugpeng/aweshelf-extension/releases).
 
-Install the aweshelf skill (see [Install](#install) above), then just tell your agent what to do.
+## Browse (TUI)
 
-**Example requests:**
-
-> "Bookmark the current session."
-
-> "List my bookmarks in the backend category."
-
-> "Search for bookmarks related to auth."
-
-The agent uses the [SKILL.md](resources/skills/aweshelf/SKILL.md) to understand all available commands and workflows.
-
-> **Tip:** Resuming a session (`aweshelf resume`) launches a new agent process, which may conflict with the current one. For resuming, it's best to exit the agent first and use `aweshelf browse` or `aweshelf resume` directly in your terminal.
-
-### Human
-
-The primary way to use aweshelf interactively is the TUI:
+Prefer pointing at your bookmarks instead of asking the agent? `aweshelf browse` opens an interactive TUI with a sidebar table and detail pane — browse, search, edit, and resume bookmarks without memorizing commands:
 
 ```bash
 aweshelf browse
@@ -106,39 +200,27 @@ Press `/` to filter bookmarks by title, category, session, project, prompt, or p
 
 ![aweshelf search filter](resources/image/example3.png)
 
-`aweshelf browse` opens an interactive terminal UI with a sidebar table and detail pane. Browse, search, edit, and resume bookmarks without memorizing commands.
-
 You can also use the VS Code / Cursor extension to browse, search, and resume bookmarks from the sidebar. Search **aweshelf-ext** in the extension marketplace, or [open in Marketplace](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext).
 
 ![aweshelf VS Code sidebar](resources/image/example4.png)
 
-### Auto-bookmark with aweswitch
+`aweshelf bookmark` marks already-bookmarked sessions and can update them after confirmation. Use `aweshelf bookmark --current` to confirm and save the most recent session in the current project without opening the session picker. Interactive bookmarking prompts for title, category, and Claude aweswitch profile; profile selection is skipped when aweswitch is not configured. Use `--no-interactive` to skip all prompts — for agents and scripting, bookmarks are created with defaults or passed values only.
 
-If you use [aweswitch](https://github.com/Webioinfo01/aweswitch) to manage profiles, sessions can be bookmarked automatically at launch:
+| Key | Action |
+|-----|--------|
+| `Enter` | Resume selected session (with confirmation) |
+| `e` | Inline-edit the current cell (title, category, profile) |
+| `r` | Remove selected bookmark (with confirmation) |
+| `y` / `n` | Confirm / cancel action |
+| `c` | Toggle between Category-grouped and All view |
+| `s` | Cycle sort order (category+id / id) |
+| `/` | Filter bookmarks |
+| `Esc` | Clear filter / cancel |
+| `[` / `]` | Shrink / grow sidebar |
+| `?` | Show keyboard shortcuts |
+| `q` | Quit |
 
-```bash
-aweswitch -c                    # launch + auto-bookmark
-aweswitch -c --profile cc-glm   # launch with profile + auto-bookmark
-```
-
-Later, restore with the same profile:
-
-```bash
-aweshelf resume aweshelf_0001   # restore with stored profile
-```
-
-aweshelf bookmarks sessions after the fact; aweswitch bridges this gap — the session is saved the moment you launch it. No manual `aweshelf bookmark` step needed.
-
-You can also use aweshelf as a regular CLI:
-
-```bash
-aweshelf bookmark                    # bookmark the current session
-aweshelf list                        # list all bookmarks
-aweshelf resume aweshelf_0001        # resume a bookmark
-aweshelf search "auth"               # search bookmarks
-```
-
-See [Commands](#commands) below for the full CLI reference.
+In edit mode: type to edit the active cell, `Delete` to clear it, `Tab`/`Right` to next field, `Shift+Tab`/`Left` to previous, `Up`/`Down` to move rows, `Enter` to save, `Esc` to exit.
 
 ## Config
 
@@ -199,27 +281,6 @@ To disable the background check:
 ```bash
 export AWESHELF_NO_UPDATE_CHECK=1
 ```
-
-## Browse (TUI)
-
-`aweshelf browse` opens an interactive TUI with a sidebar table and detail pane.
-`aweshelf bookmark` marks already-bookmarked sessions and can update them after confirmation. Use `aweshelf bookmark --current` to confirm and save the most recent session in the current project without opening the session picker. Interactive bookmarking prompts for title, category, and Claude aweswitch profile; profile selection is skipped when aweswitch is not configured. Use `--no-interactive` to skip all prompts — for agents and scripting, bookmarks are created with defaults or passed values only.
-
-| Key | Action |
-|-----|--------|
-| `Enter` | Resume selected session (with confirmation) |
-| `e` | Inline-edit the current cell (title, category, profile) |
-| `r` | Remove selected bookmark (with confirmation) |
-| `y` / `n` | Confirm / cancel action |
-| `c` | Toggle between Category-grouped and All view |
-| `s` | Cycle sort order (category+id / id) |
-| `/` | Filter bookmarks |
-| `Esc` | Clear filter / cancel |
-| `[` / `]` | Shrink / grow sidebar |
-| `?` | Show keyboard shortcuts |
-| `q` | Quit |
-
-In edit mode: type to edit the active cell, `Delete` to clear it, `Tab`/`Right` to next field, `Shift+Tab`/`Left` to previous, `Up`/`Down` to move rows, `Enter` to save, `Esc` to exit.
 
 ## Support
 

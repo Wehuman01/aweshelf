@@ -23,9 +23,10 @@
     <img src="https://img.shields.io/github/stars/Webioinfo01/aweshelf?style=flat-square" alt="GitHub stars">
   </p>
 </div>
-## 安装
 
-### 让 AI agent 安装
+## 快速开始
+
+### 1. 安装和使用 aweshelf
 
 如果你在 Claude Code、Codex、Cursor 等 coding agent 中工作，直接告诉它：
 
@@ -38,25 +39,133 @@ Agent 会先安装 `aweshelf` CLI，然后在下面两种 skill 管理方式中�
 1. **通过 [aweskill](https://aweskill.webioinfo.top/)** — 从 GitHub 安装和管理 skill，支持更新、投影和备份。需要 Node.js。
 2. **直接复制** — 将 `SKILL.md` 下载到 agent 的 skill 目录。除 Python 外无需额外依赖，但后续更新需要手动重新复制。
 
-### pip
+引导完成后就可以直接用了。收藏、搜索、整理都通过自然语言完成，上手可以先试试：
+
+> “收藏当前会话。”
+
+> “列出 backend 分类下的书签。”
+
+> “搜索和 auth 相关的书签。”
+
+Agent 通过 [SKILL.md](resources/skills/aweshelf/SKILL.md) 理解所有可用命令和工作流。
+
+<details>
+<summary>手动安装 — pip 与 skill 配置</summary>
+
+从 PyPI 安装：
 
 ```bash
 pip install aweshelf
 ```
 
-### 可选：aweswitch
+然后把 skill 放到 agent 能找到的地方。通过 aweskill（需要 Node.js）：
 
-aweshelf 在收藏会话时会保存当前的 aweswitch profile。安装 [aweswitch](https://github.com/mugpeng/aweswitch) 可启用多配置管理 — 不安装的话 aweshelf 仍然可用，但恢复会话时不会自动切换 profile。
+```bash
+aweskill install Webioinfo01/aweshelf
+aweskill agent add skill aweshelf --global --agent <agent-id>   # <agent-id>：claude-code、codex、cursor 等
+```
 
-有了 aweswitch，你可以用原始 provider（如 Claude Code 官方 API）恢复会话，也可以切换到其他已配置的 profile，比如 `cc-xiaomi`、`cc-glm` 等 — 每个 profile 有独立的 API endpoint、token 和模型。
+或者直接复制 — 把 `SKILL.md` 下载到 agent 的 skill 目录，目录对照表见 [README.ai.md](README.ai.md)。
+
+</details>
+
+### 2. 给 agent 装上管理能力
+
+第 1 步的引导 prompt 通常会顺带装好 `aweshelf` skill — `README.ai.md` 把它作为独立的一步。如果你是手动装的 CLI，或者 skill 缺失，投影一次即可，agent 就能在本次和以后的会话里帮你管理书签：
+
+<details>
+<summary>等价的 CLI 命令</summary>
+
+```bash
+aweskill install Webioinfo01/aweshelf
+aweskill agent supported                          # 找到当前 agent id（标 ✓ 的行）
+aweskill agent add skill aweshelf --global --agent <agent-id>
+aweskill agent list --global --agent <agent-id>   # aweshelf 显示为 linked 即成功
+```
+
+没有 aweskill（也不想装 Node.js）？把 `SKILL.md` 直接复制到 agent 的 skill 目录即可，步骤见 [README.ai.md](README.ai.md)。
+
+</details>
+
+### 3. 开始用自然语言管理书签
+
+日常使用不需要记命令，直接描述意图就行（完整 CLI 参考见下方[命令](#命令)）：
+
+#### 收藏与整理
+
+可以直接对 agent 说：
+
+```text
+把当前会话收藏为「修复 auth 中间件 bug」，分类放到 backend。
+```
+
+<details>
+<summary>等价的 CLI 命令</summary>
+
+```bash
+aweshelf bookmark -t “修复 auth 中间件 bug” -c backend   # 收藏当前会话
+aweshelf edit aweshelf_0001 -t “新标题” -c frontend      # 之后改标题或分类
+aweshelf rm aweshelf_0002                               # 删除书签
+```
+
+</details>
+
+#### 查找会话
+
+可以直接对 agent 说：
+
+```text
+搜索和 auth 相关的书签，并把最近的几条列给我。
+```
+
+<details>
+<summary>等价的 CLI 命令</summary>
+
+```bash
+aweshelf list -c backend             # 列出某个分类下的书签
+aweshelf search “auth”               # 按标题、分类、会话、项目、首条提示词、profile 搜索
+aweshelf recent -n 10                # 最近的收藏
+aweshelf show aweshelf_0001          # 查看某条书签详情
+```
+
+</details>
+
+#### 恢复会话
+
+想接着上次的会话继续？恢复是唯一一件 agent 不会替你做的事：`aweshelf resume` 会启动一个新的 agent 进程，和你正在对话的会话冲突。先退出当前 agent，然后在自己的终端里运行：
+
+```bash
+aweshelf resume aweshelf_0001                    # 用存储的 profile 恢复
+aweshelf resume aweshelf_0001 --profile cc-glm   # 也可以指定别的 profile
+```
+
+#### 配合 aweswitch 自动收藏
+
+如果你用 [aweswitch](https://github.com/Webioinfo01/aweswitch) 启动会话，可以做到启动即收藏 — 每条书签会记住启动时的 profile，`resume` 时恢复原始 provider（如 Claude Code 官方 API），也可以切换到其他已配置的 profile，比如 `cc-xiaomi`、`cc-glm`。在你的终端运行（aweswitch 会启动新的 agent 会话，agent 不会替你启动）：
+
+```bash
+aweswitch -c                    # 启动 + 自动收藏
+aweswitch -c --profile cc-glm   # 指定配置启动 + 自动收藏
+```
+
+之后用相同配置恢复：
+
+```bash
+aweshelf resume aweshelf_0001   # 用存储的 aweswitch profile 恢复
+```
+
+<details>
+<summary>安装 aweswitch</summary>
 
 ```bash
 pip install aweswitch
 ```
 
-## 扩展
+不装 aweswitch 也不影响使用 — 只是恢复会话时不会自动切换 profile。
 
-- **[aweshelf-extension/vscode](https://github.com/mugpeng/aweshelf-extension/tree/main/vscode)** — VS Code / Cursor 扩展，可在侧边栏浏览、搜索和恢复书签。在扩展市场搜索 **aweshelf-ext**，或 [打开 Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext)。也可下载 [.vsix](https://github.com/mugpeng/aweshelf-extension/releases) 安装。
+</details>
+
+> **提示：** 更喜欢直接操作？`aweshelf browse` 打开 TUI，浏览、搜索、编辑、恢复书签都不用记命令 — 见[浏览模式 (TUI)](#浏览模式-tui)。
 
 ## 支持工具
 
@@ -65,27 +174,13 @@ aweshelf 由两个配套工具驱动：
 - **[aweskill](https://github.com/Webioinfo01/aweskill)** — 面向 AI agent 的 CLI skill 包管理器。负责 skill 的安装、更新和投影，支持 47+ 编程 agent。
 - **[aweswitch](https://github.com/mugpeng/aweswitch)** — Agent profile 切换器。用不同 API、token 和模型启动会话。aweshelf 在书签中存储 aweswitch profile，恢复会话时自动还原配置。
 
-## 使用
+## 扩展
 
-### AI Agent
+- **[aweshelf-extension/vscode](https://github.com/mugpeng/aweshelf-extension/tree/main/vscode)** — VS Code / Cursor 扩展，可在侧边栏浏览、搜索和恢复书签。在扩展市场搜索 **aweshelf-ext**，或 [打开 Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext)。也可下载 [.vsix](https://github.com/mugpeng/aweshelf-extension/releases) 安装。
 
-安装 aweshelf skill（见上方[安装](#安装)），然后直接告诉你的 agent 做什么。
+## 浏览模式 (TUI)
 
-**你可以这样告诉你的 agent：**
-
-> "收藏当前会话。"
-
-> "列出 backend 分类下的书签。"
-
-> "搜索和 auth 相关的书签。"
-
-Agent 通过 [SKILL.md](resources/skills/aweshelf/SKILL.md) 理解所有可用命令和工作流。
-
-> **提示：** 恢复会话（`aweshelf resume`）会启动新的 agent 进程，可能和当前运行的冲突。建议退出当前 agent 后，直接在终端用 `aweshelf browse` 或 `aweshelf resume` 恢复。
-
-### 人类使用
-
-主要的交互方式是 TUI：
+更喜欢直接操作而不是问 agent？`aweshelf browse` 打开交互式终端 UI，左侧为书签表格，右侧为详情面板 — 无需记忆命令，直接浏览、搜索、编辑和恢复书签：
 
 ```bash
 aweshelf browse
@@ -103,39 +198,27 @@ aweshelf browse
 
 ![aweshelf 搜索过滤](resources/image/example3.png)
 
-`aweshelf browse` 打开交互式终端 UI，左侧为书签表格，右侧为详情面板。无需记忆命令，直接浏览、搜索、编辑和恢复书签。
-
 也可以使用 VS Code / Cursor 插件，在侧边栏里浏览、搜索和恢复书签。在扩展市场搜索 **aweshelf-ext** 安装，或 [打开 Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext)。
 
 ![aweshelf VS Code 侧边栏](resources/image/example4.png)
 
-### 配合 aweswitch 自动收藏
+`aweshelf bookmark` 会标记已经收藏的会话，并可在确认后更新已有 bookmark。使用 `aweshelf bookmark --current` 可以确认并保存当前项目最近的会话，不打开会话选择列表。交互收藏时会提示填写标题、分类和 Claude aweswitch profile；未配置 aweswitch 时会跳过 profile 选择。使用 `--no-interactive` 可跳过所有提示——适用于 agent 和脚本场景，仅使用默认值或传入的参数创建书签。
 
-如果你使用 [aweswitch](https://github.com/Webioinfo01/aweswitch) 管理配置，可以在启动会话时自动收藏：
+| 按键 | 操作 |
+|------|------|
+| `Enter` | 恢复选中的会话（带确认） |
+| `e` | 内联编辑当前单元格（标题、分类、配置） |
+| `r` | 删除选中书签（带确认） |
+| `y` / `n` | 确认 / 取消操作 |
+| `c` | 切换分类分组 / 全部视图 |
+| `s` | 循环排序方式（分类+ID / ID） |
+| `/` | 过滤书签 |
+| `Esc` | 清除过滤 / 取消 |
+| `[` / `]` | 缩小 / 扩大侧边栏 |
+| `?` | 显示快捷键帮助 |
+| `q` | 退出 |
 
-```bash
-aweswitch -c                    # 启动 + 自动收藏
-aweswitch -c --profile cc-glm   # 指定配置启动 + 自动收藏
-```
-
-之后用相同配置恢复：
-
-```bash
-aweshelf resume aweshelf_0001   # 用存储的配置恢复
-```
-
-aweshelf 只能在事后收藏会话；aweswitch 弥补了这个短板——会话启动即保存，无需手动执行 `aweshelf bookmark`。
-
-也可以直接调用 CLI 命令：
-
-```bash
-aweshelf bookmark                    # 收藏当前会话
-aweshelf list                        # 列出所有书签
-aweshelf resume aweshelf_0001        # 恢复书签
-aweshelf search "auth"               # 搜索书签
-```
-
-完整命令参考见下方[命令](#命令)。
+编辑模式：输入文字编辑当前单元格，`Delete` 清空当前单元格，`Tab`/`Right` 切换下一个字段，`Shift+Tab`/`Left` 切换上一个，`Up`/`Down` 切换行，`Enter` 保存，`Esc` 退出。
 
 ## 配置
 
@@ -196,27 +279,6 @@ aweshelf self-update --check
 ```bash
 export AWESHELF_NO_UPDATE_CHECK=1
 ```
-
-## 浏览模式 (TUI)
-
-`aweshelf browse` 打开交互式 TUI，左侧为书签表格，右侧为详情面板。
-`aweshelf bookmark` 会标记已经收藏的会话，并可在确认后更新已有 bookmark。使用 `aweshelf bookmark --current` 可以确认并保存当前项目最近的会话，不打开会话选择列表。交互收藏时会提示填写标题、分类和 Claude aweswitch profile；未配置 aweswitch 时会跳过 profile 选择。使用 `--no-interactive` 可跳过所有提示——适用于 agent 和脚本场景，仅使用默认值或传入的参数创建书签。
-
-| 按键 | 操作 |
-|------|------|
-| `Enter` | 恢复选中的会话（带确认） |
-| `e` | 内联编辑当前单元格（标题、分类、配置） |
-| `r` | 删除选中书签（带确认） |
-| `y` / `n` | 确认 / 取消操作 |
-| `c` | 切换分类分组 / 全部视图 |
-| `s` | 循环排序方式（分类+ID / ID） |
-| `/` | 过滤书签 |
-| `Esc` | 清除过滤 / 取消 |
-| `[` / `]` | 缩小 / 扩大侧边栏 |
-| `?` | 显示快捷键帮助 |
-| `q` | 退出 |
-
-编辑模式：输入文字编辑当前单元格，`Delete` 清空当前单元格，`Tab`/`Right` 切换下一个字段，`Shift+Tab`/`Left` 切换上一个，`Up`/`Down` 切换行，`Enter` 保存，`Esc` 退出。
 
 ## 赞助与支持
 
