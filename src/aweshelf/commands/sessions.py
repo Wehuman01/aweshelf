@@ -43,10 +43,7 @@ def sessions_command(limit, as_json):
     """List discoverable sessions in the current project."""
     all_sessions = find_project_sessions()
     total = len(all_sessions)
-    if limit > 0:
-        sessions = all_sessions[:limit]
-    else:
-        sessions = all_sessions
+    sessions = all_sessions[:limit] if limit > 0 else all_sessions
     output = format_sessions_json(sessions) if as_json else format_sessions_table(sessions)
     click.echo(output)
     if limit > 0 and total > limit:

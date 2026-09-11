@@ -8,7 +8,6 @@ from pathlib import Path
 
 from aweshelf.types import Bookmark
 
-
 CONFIG_DIR = Path("~/.config/aweshelf")
 ID_RE = re.compile(r"^aweshelf_(\d+)$")
 

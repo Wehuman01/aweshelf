@@ -227,6 +227,7 @@ class CliTests(unittest.TestCase):
     @patch("aweshelf.commands.resume.build_resume_target")
     def test_resume_dry_run_json_outputs_target(self, mock_build, mock_find):
         from pathlib import Path
+
         from aweshelf.lib.resume_target import ResumeTarget
 
         mock_find.return_value = Bookmark(

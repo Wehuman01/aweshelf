@@ -4,7 +4,13 @@ import json
 
 import click
 
-from aweshelf.lib.store import find_bookmark, find_by_session_id, format_bookmark_detail, update_bookmark, remove_bookmark
+from aweshelf.lib.store import (
+    find_bookmark,
+    find_by_session_id,
+    format_bookmark_detail,
+    remove_bookmark,
+    update_bookmark,
+)
 
 
 def _resolve_bookmark(identifier: str):

@@ -8,7 +8,12 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.widgets import DataTable, Header, Input, Static
 
-from aweshelf.lib.store import filter_bookmarks, format_bookmark_detail, load_bookmarks, remove_bookmark, update_bookmark
+from aweshelf.lib.store import (
+    filter_bookmarks,
+    load_bookmarks,
+    remove_bookmark,
+    update_bookmark,
+)
 from aweshelf.types import Bookmark
 
 SIDEBAR_FRAC = 60

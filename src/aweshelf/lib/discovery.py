@@ -5,7 +5,6 @@ from pathlib import Path
 
 from aweshelf.lib.session import parse_session_meta
 
-
 CLAUDE_PROJECTS_DIR = Path("~/.claude/projects").expanduser()
 CODEX_SESSIONS_DIR = Path("~/.codex/sessions").expanduser()
 

@@ -8,7 +8,8 @@ from pathlib import Path
 
 import click
 
-from aweshelf.lib.aweswitch import build_resume_command, profile_exists as default_profile_exists
+from aweshelf.lib.aweswitch import build_resume_command
+from aweshelf.lib.aweswitch import profile_exists as default_profile_exists
 from aweshelf.types import Bookmark
 
 

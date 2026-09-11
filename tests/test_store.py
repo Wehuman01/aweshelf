@@ -8,19 +8,19 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from aweshelf.types import Bookmark
 from aweshelf.lib.store import (
     BookmarkStoreError,
-    generate_id,
-    load_bookmarks,
-    save_bookmarks,
     add_bookmark,
-    remove_bookmark,
-    update_bookmark,
     find_bookmark,
     find_by_session_id,
+    generate_id,
     list_categories,
+    load_bookmarks,
+    remove_bookmark,
+    save_bookmarks,
+    update_bookmark,
 )
+from aweshelf.types import Bookmark
 
 
 def make_bookmark(**kwargs) -> Bookmark:

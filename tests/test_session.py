@@ -8,7 +8,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from aweshelf.lib.session import parse_session_meta, detect_provider, extract_title_from_messages, extract_first_prompt, clean_title
+from aweshelf.lib.session import (
+    clean_title,
+    detect_provider,
+    extract_first_prompt,
+    extract_title_from_messages,
+    parse_session_meta,
+)
 
 
 def write_jsonl(path: Path, entries: list[dict]) -> None:

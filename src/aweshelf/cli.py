@@ -8,14 +8,14 @@ from pathlib import Path
 import click
 
 from aweshelf import __version__
-from aweshelf.update_check import check_async, get_pypi_latest, _version_gte
 from aweshelf.commands.bookmark import bookmark_command
-from aweshelf.commands.list import list_command, search_command, recent_command
-from aweshelf.commands.show import show_command, edit_command, rm_command
-from aweshelf.commands.resume import resume_command
 from aweshelf.commands.browse import browse_command
+from aweshelf.commands.list import list_command, recent_command, search_command
+from aweshelf.commands.resume import resume_command
 from aweshelf.commands.sessions import sessions_command
+from aweshelf.commands.show import edit_command, rm_command, show_command
 from aweshelf.lib.store import BookmarkStoreError
+from aweshelf.update_check import _version_gte, check_async, get_pypi_latest
 
 
 @click.group(
@@ -47,7 +47,7 @@ def self_update_command(check):
     try:
         latest = get_pypi_latest()
     except Exception as e:
-        raise SystemExit(f"Failed to check PyPI: {e}")
+        raise SystemExit(f"Failed to check PyPI: {e}") from e
     if _version_gte(__version__, latest):
         click.echo(f"aweshelf is up to date ({__version__}).")
         return
@@ -74,7 +74,7 @@ def main(argv=None):
         return cli.main(args=argv, prog_name="aweshelf")
     except BookmarkStoreError as exc:
         # Corrupt bookmark store: surface a readable message instead of a traceback.
-        raise SystemExit(f"aweshelf: {exc}")
+        raise SystemExit(f"aweshelf: {exc}") from exc
     finally:
         reminder = get_reminder()
         if reminder:
