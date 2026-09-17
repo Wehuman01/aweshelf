@@ -75,7 +75,7 @@ pip install aweswitch
 
 Together, the three tools cover the full lifecycle: **aweskill** installs the skill, **aweswitch** manages the API config, and **aweshelf** bookmarks the session. The agent handles all three — you focus on the code.
 
-> Want to go deeper? Read [Let Your AI Agent Manage aweskill for You](https://aweskill.webioinfo.top/articles/let-your-ai-agent-manage-aweskill-for-you/) (English) or the [中文版](https://mp.weixin.qq.com/s/Fb0Q7nKEJtORSTz7Ukv_EA).
+> Want to go deeper? Read [Let Your AI Agent Manage aweskill for You](https://aweskill.wehuman.top/articles/let-your-ai-agent-manage-aweskill-for-you/) (English) or the [中文版](https://mp.weixin.qq.com/s/Fb0Q7nKEJtORSTz7Ukv_EA).
 
 ## Use Case 1: Ask the Agent to Bookmark a Session
 
@@ -296,7 +296,7 @@ It does not try to be a platform. It does not sync to the cloud. It does not req
 
 `aweshelf` is part of the [Webioinfo](https://www.webioinfo.top/) ecosystem — a collection of tools for AI-assisted development:
 
-- **[aweskill](https://aweskill.webioinfo.top/)** — CLI-first Skill package manager for 47+ AI coding agents. Install, update, and project Skills across Claude Code, Codex, Cursor, and more.
+- **[aweskill](https://aweskill.wehuman.top/)** — CLI-first Skill package manager for 47+ AI coding agents. Install, update, and project Skills across Claude Code, Codex, Cursor, and more.
 - **[awescholar](https://github.com/wehuman01/awescholar)** — Automated scientific literature discovery. Search, annotate, filter, and generate research reports with LLM-powered pipelines.
 - **[aweswitch](https://github.com/wehuman01/aweswitch)** — Agent profile switcher. Launch sessions with different API endpoints, tokens, and models.
 

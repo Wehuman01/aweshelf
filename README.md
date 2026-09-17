@@ -36,7 +36,7 @@ Read https://github.com/wehuman01/aweshelf/blob/main/README.ai.md and follow it 
 
 The agent will first install the `aweshelf` CLI, then choose one of two skill management options:
 
-1. **Via [aweskill](https://aweskill.webioinfo.top/)** — installs and manages the skill from GitHub with update, projection, and backup support. Requires Node.js.
+1. **Via [aweskill](https://aweskill.wehuman.top/)** — installs and manages the skill from GitHub with update, projection, and backup support. Requires Node.js.
 2. **Direct copy** — downloads `SKILL.md` into the agent's skill directory. No extra dependencies beyond Python, but future updates require copying the file again manually.
 
 Once the bootstrap finishes, aweshelf is ready to use. Bookmarks, search, and edits all work through natural language — start with things like:
@@ -326,7 +326,7 @@ aweshelf is part of a growing family of "awesome" tools — CLI-first, local-fir
 
 ### CLI Tools
 
-- **[aweskill](https://aweskill.webioinfo.top/)** — CLI-first skill package manager supporting 47+ AI coding agents.
+- **[aweskill](https://aweskill.wehuman.top/)** — CLI-first skill package manager supporting 47+ AI coding agents.
 - **[aweswitch](https://github.com/wehuman01/aweswitch)** — Agent profile switcher for Claude Code, Codex, and OpenCode.
 - **[awerouter](https://github.com/wehuman01/awerouter)** — Smart router that splits requests between Flash and Pro models using structural signals, cutting unnecessary model spend.
 - **[aweshelf](https://github.com/wehuman01/aweshelf)** — Bookmark, categorize, and restore AI coding sessions; pairs with aweswitch to save profiles and launch with one command.
