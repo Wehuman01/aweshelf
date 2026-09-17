@@ -48,7 +48,7 @@ Non-interactive bookmarking for agents and scripting.
 
 Better list output and category-as-view model.
 
-Inspired by [PR #2](https://github.com/Webioinfo01/aweshelf/pull/2) (category management), this release takes a simpler approach: categories are derived from bookmarks, not managed as independent entities. Instead of `category add/list/rm` commands, `aweshelf list --by category` provides the same visibility with zero state to maintain.
+Inspired by [PR #2](https://github.com/wehuman01/aweshelf/pull/2) (category management), this release takes a simpler approach: categories are derived from bookmarks, not managed as independent entities. Instead of `category add/list/rm` commands, `aweshelf list --by category` provides the same visibility with zero state to maintain.
 
 ### Highlights
 
@@ -75,7 +75,7 @@ VS Code extension support, search enhancements, and new sessions command.
 
 ### Highlights
 
-- VS Code extension now available at [mugpeng/aweshelf-extension](https://github.com/mugpeng/aweshelf-extension) — browse, search, bookmark, and resume sessions directly from VS Code
+- VS Code extension now available at [wehuman01/aweshelf-extension](https://github.com/wehuman01/aweshelf-extension) — browse, search, bookmark, and resume sessions directly from VS Code
 - Search command gains `--category`, `--provider`, and `--sort` options for server-side filtering and sorting
 - New `sessions` command for listing discovered sessions
 - Resume command improvements

@@ -31,7 +31,7 @@ Match the user's intent to a task domain, then follow the workflow below.
 
 No config file is needed to start. Bookmarks are stored at `~/.config/aweshelf/bookmarks.json` automatically.
 
-For aweswitch profile integration (auto-detecting API endpoint/model), install [aweswitch](https://github.com/Webioinfo01/aweswitch) separately.
+For aweswitch profile integration (auto-detecting API endpoint/model), install [aweswitch](https://github.com/wehuman01/aweswitch) separately.
 
 ## Core Rules
 

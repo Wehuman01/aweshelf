@@ -19,7 +19,7 @@ from aweshelf.lib.store import (
 from aweshelf.types import Bookmark
 
 DEFAULT_LIST_LIMIT = 10
-AWESWITCH_URL = "https://github.com/Webioinfo01/aweswitch"
+AWESWITCH_URL = "https://github.com/wehuman01/aweswitch"
 
 
 def _validate_profile(profile: str | None, provider: str, config: dict | None) -> str | None:

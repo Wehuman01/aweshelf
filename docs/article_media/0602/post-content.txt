@@ -18,4 +18,4 @@ VS Code 扩展——侧边栏一键恢复
 
 pip install aweshelf 就能开始用。
 
-项目在 Webioinfo01/aweshelf
+项目在 wehuman01/aweshelf

@@ -495,7 +495,7 @@ class BookmarkCommandTests(unittest.TestCase):
         result = runner.invoke(aweshelf.cli, ["bookmark"], input="1\n\nbackend\n")
         self.assertEqual(result.exit_code, 0, result.output)
         self.assertIn("aweswitch config not found; profile selection skipped.", result.output)
-        self.assertIn("https://github.com/Webioinfo01/aweswitch", result.output)
+        self.assertIn("https://github.com/wehuman01/aweswitch", result.output)
         self.assertIsNone(load_bookmarks(path)[0].aweswitch_profile)
 
     @patch("aweshelf.commands.bookmark.find_project_sessions", return_value=[])

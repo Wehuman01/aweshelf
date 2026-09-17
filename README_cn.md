@@ -1,6 +1,6 @@
 <div align="center">
   <img src="logo/aweshelf.png" alt="aweshelf" width="860">
-  <h1>aweshelf: AI Agents会话收藏管理器 <a href="https://github.com/Webioinfo01/aweskill"><img src="https://raw.githubusercontent.com/Webioinfo01/aweskill/main/logo/aweskill-badge2.svg" alt="aweskill companion"></a></h1>
+  <h1>aweshelf: AI Agents会话收藏管理器 <a href="https://github.com/wehuman01/aweskill"><img src="https://raw.githubusercontent.com/wehuman01/aweskill/main/logo/aweskill-badge2.svg" alt="aweskill companion"></a></h1>
   <p><strong>收藏、分类、恢复 AI 编程会话，支持 aweswitch 配置恢复。</strong></p>
   <p>轻量 CLI-first 工具，支持 Claude Code 和 Codex。</p>
   <p>
@@ -20,7 +20,7 @@
     <img src="https://img.shields.io/badge/install-pip-22C55E?style=flat-square" alt="pip install">
     <img src="https://img.shields.io/badge/platform-terminal-334155?style=flat-square" alt="Platform">
     <img src="https://img.shields.io/pepy/dt/aweshelf?style=flat-square" alt="PyPI downloads">
-    <img src="https://img.shields.io/github/stars/Webioinfo01/aweshelf?style=flat-square" alt="GitHub stars">
+    <img src="https://img.shields.io/github/stars/wehuman01/aweshelf?style=flat-square" alt="GitHub stars">
   </p>
 </div>
 
@@ -31,7 +31,7 @@
 如果你在 Claude Code、Codex、Cursor 等 coding agent 中工作，直接告诉它：
 
 ```text
-Read https://github.com/Webioinfo01/aweshelf/blob/main/README.ai.md and follow it to install aweshelf for this agent.
+Read https://github.com/wehuman01/aweshelf/blob/main/README.ai.md and follow it to install aweshelf for this agent.
 ```
 
 Agent 会先安装 `aweshelf` CLI，然后在下面两种 skill 管理方式中选择一种：
@@ -61,7 +61,7 @@ pip install aweshelf
 然后把 skill 放到 agent 能找到的地方。通过 aweskill（需要 Node.js）：
 
 ```bash
-aweskill install Webioinfo01/aweshelf
+aweskill install wehuman01/aweshelf
 aweskill agent add skill aweshelf --global --agent <agent-id>   # <agent-id>：claude-code、codex、cursor 等
 ```
 
@@ -77,7 +77,7 @@ aweskill agent add skill aweshelf --global --agent <agent-id>   # <agent-id>：c
 <summary>等价的 CLI 命令</summary>
 
 ```bash
-aweskill install Webioinfo01/aweshelf
+aweskill install wehuman01/aweshelf
 aweskill agent supported                          # 找到当前 agent id（标 ✓ 的行）
 aweskill agent add skill aweshelf --global --agent <agent-id>
 aweskill agent list --global --agent <agent-id>   # aweshelf 显示为 linked 即成功
@@ -141,7 +141,7 @@ aweshelf resume aweshelf_0001 --profile cc-glm   # 也可以指定别的 profile
 
 #### 配合 aweswitch 自动收藏
 
-如果你用 [aweswitch](https://github.com/Webioinfo01/aweswitch) 启动会话，可以做到启动即收藏 — 每条书签会记住启动时的 profile，`resume` 时恢复原始 provider（如 Claude Code 官方 API），也可以切换到其他已配置的 profile，比如 `cc-xiaomi`、`cc-glm`。在你的终端运行（aweswitch 会启动新的 agent 会话，agent 不会替你启动）：
+如果你用 [aweswitch](https://github.com/wehuman01/aweswitch) 启动会话，可以做到启动即收藏 — 每条书签会记住启动时的 profile，`resume` 时恢复原始 provider（如 Claude Code 官方 API），也可以切换到其他已配置的 profile，比如 `cc-xiaomi`、`cc-glm`。在你的终端运行（aweswitch 会启动新的 agent 会话，agent 不会替你启动）：
 
 ```bash
 aweswitch -c                    # 启动 + 自动收藏
@@ -171,12 +171,12 @@ pip install aweswitch
 
 aweshelf 由两个配套工具驱动：
 
-- **[aweskill](https://github.com/Webioinfo01/aweskill)** — 面向 AI agent 的 CLI skill 包管理器。负责 skill 的安装、更新和投影，支持 47+ 编程 agent。
-- **[aweswitch](https://github.com/mugpeng/aweswitch)** — Agent profile 切换器。用不同 API、token 和模型启动会话。aweshelf 在书签中存储 aweswitch profile，恢复会话时自动还原配置。
+- **[aweskill](https://github.com/wehuman01/aweskill)** — 面向 AI agent 的 CLI skill 包管理器。负责 skill 的安装、更新和投影，支持 47+ 编程 agent。
+- **[aweswitch](https://github.com/wehuman01/aweswitch)** — Agent profile 切换器。用不同 API、token 和模型启动会话。aweshelf 在书签中存储 aweswitch profile，恢复会话时自动还原配置。
 
 ## 扩展
 
-- **[aweshelf-extension/vscode](https://github.com/mugpeng/aweshelf-extension/tree/main/vscode)** — VS Code / Cursor 扩展，可在侧边栏浏览、搜索和恢复书签。在扩展市场搜索 **aweshelf-ext**，或 [打开 Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext)。也可下载 [.vsix](https://github.com/mugpeng/aweshelf-extension/releases) 安装。
+- **[aweshelf-extension/vscode](https://github.com/wehuman01/aweshelf-extension/tree/main/vscode)** — VS Code / Cursor 扩展，可在侧边栏浏览、搜索和恢复书签。在扩展市场搜索 **aweshelf-ext**，或 [打开 Marketplace 页面](https://marketplace.visualstudio.com/items?itemName=webioinfo.aweshelf-ext)。也可下载 [.vsix](https://github.com/wehuman01/aweshelf-extension/releases) 安装。
 
 ## 浏览模式 (TUI)
 
@@ -325,12 +325,12 @@ aweshelf 是一个不断壮大的 "awesome" 工具家族中的一员 — 围绕 
 ### CLI 工具
 
 - **[aweskill](https://aweskill.webioinfo.top/)** — CLI 优先的技能包管理器，支持 47+ AI 编程 agent。
-- **[aweswitch](https://github.com/Webioinfo01/aweswitch)** — Claude Code、Codex、OpenCode 的 agent 配置切换器。
-- **[awerouter](https://github.com/mugpeng/awerouter)** — 智能路由器，用结构信号把请求分给 Flash 或 Pro 模型，减少不必要的模型开销。
-- **[aweshelf](https://github.com/Webioinfo01/aweshelf)** — 收藏、分类、恢复 AI 编程会话，还能搭配 aweswitch 实现保存配置，一键启动。
+- **[aweswitch](https://github.com/wehuman01/aweswitch)** — Claude Code、Codex、OpenCode 的 agent 配置切换器。
+- **[awerouter](https://github.com/wehuman01/awerouter)** — 智能路由器，用结构信号把请求分给 Flash 或 Pro 模型，减少不必要的模型开销。
+- **[aweshelf](https://github.com/wehuman01/aweshelf)** — 收藏、分类、恢复 AI 编程会话，还能搭配 aweswitch 实现保存配置，一键启动。
 - **[aweshare](https://github.com/wehuman01/aweshare)** — 通过自建 Hub 共享本地 Ollama/vLLM，或国产厂商 coding plan，或已授权的 OpenAI/Anthropic 帐号订阅，实现 token 的共享经济。
 - **[awewarm](https://github.com/wehuman01/awewarm)** — 订阅窗口保持器，让 AI 编程套餐的窗口持续激活，无论是本地设置，还是通过远程连接的服务器。
-- **[awescholar](https://github.com/Webioinfo01/awescholar)** — AI agent 可自主执行的科学文献发现与策展，搜索、标注、筛选和报告学术论文。
+- **[awescholar](https://github.com/wehuman01/awescholar)** — AI agent 可自主执行的科学文献发现与策展，搜索、标注、筛选和报告学术论文。
 
 ### 桌面应用
 

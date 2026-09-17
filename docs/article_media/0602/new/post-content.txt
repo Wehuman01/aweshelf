@@ -23,7 +23,7 @@ aweshelf resume aweshelf_0001 — 从断点继续
 
 数据就是本地一个 JSON 文件，不上云不同步，简单可靠。
 
-pip install aweshelf 就能试，项目在 Webioinfo01/aweshelf，有兴趣的可以看看。
+pip install aweshelf 就能试，项目在 wehuman01/aweshelf，有兴趣的可以看看。
 
 （809/1000）
 

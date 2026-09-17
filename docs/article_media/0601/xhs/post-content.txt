@@ -21,4 +21,4 @@ Agent 友好——直接用自然语言让 Agent 帮你收藏和恢复
 
 pip install aweshelf 即可开始。
 
-GitHub: github.com/Webioinfo01/aweshelf
+GitHub: github.com/wehuman01/aweshelf

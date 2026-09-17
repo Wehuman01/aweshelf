@@ -29,7 +29,7 @@ aweshelf resume aweshelf_0001 → 从断点继续
 
 pip install aweshelf 即可开始。
 
-项目在 Webioinfo01/aweshelf
+项目在 wehuman01/aweshelf
 
 ## Tags
 
