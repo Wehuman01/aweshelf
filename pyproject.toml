@@ -15,7 +15,7 @@ authors = [
 license = "MPL-2.0"
 keywords = ["ai", "agent", "claude", "codex", "bookmark", "session", "aweswitch"]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
   "Environment :: Console",
   "Intended Audience :: Developers",
   "Programming Language :: Python :: 3",
